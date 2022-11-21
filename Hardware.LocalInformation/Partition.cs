@@ -2,24 +2,22 @@
 
 // FileName: Partition.cs
 // ProjectName: Hardware.LocalInformation
-// CreateTime: 2022-11-18 16:11
-// UpdateTime: 2022-11-18 16:11
+// CreateTime: 2022-11-21 10:48
+// UpdateTime: 2022-11-21 10:48
 // Updator: zhangchi
 
 #endregion
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using CZGL.SystemInfo;
 
 namespace Hardware.LocalInformation
 {
     public class Partition
     {
-        private static readonly string[] HardDiskFileSystems = new[] { "ext3", "ext4", "NTFS", "exFAT", "fat32" };
+        private static readonly string[] HardDiskFileSystems = { "ext3", "ext4", "NTFS", "exFAT", "fat32" };
 
         public List<PartitionInfo> GetPartitionInfos()
         {
@@ -40,15 +38,34 @@ namespace Hardware.LocalInformation
     public class PartitionInfo
     {
         /// <summary>
-        /// 
+        ///     卷标
         /// </summary>
-        public string Label { get; set; }
+        public string Label { get; internal set; }
 
-        public string Name { get; set; }
-        public string Format { get; set; }
-        public DriveType Type { get; set; }
-        public long FreeSpace { get; set; }
-        public long TotalSpace { get; set; }
+        /// <summary>
+        ///     名称
+        /// </summary>
+        public string Name { get; internal set; }
+
+        /// <summary>
+        ///     格式
+        /// </summary>
+        public string Format { get; internal set; }
+
+        /// <summary>
+        ///     分区类型
+        /// </summary>
+        public DriveType Type { get; internal set; }
+
+        /// <summary>
+        ///     可用空间
+        /// </summary>
+        public long FreeSpace { get; internal set; }
+
+        /// <summary>
+        ///     所有空间
+        /// </summary>
+        public long TotalSpace { get; internal set; }
 
         public override string ToString()
         {

@@ -18,13 +18,13 @@ namespace Hardware.LocalInformation
 {
     internal class ShellUtil
     {
-        public static string Execute(string fileName, string args)
+        public static string Execute(string command, string args = null)
         {
 #if Windows
             var output = string.Empty;
             var info = new ProcessStartInfo
             {
-                FileName = fileName,
+                FileName = command,
                 Arguments = args,
                 RedirectStandardOutput = true
             };

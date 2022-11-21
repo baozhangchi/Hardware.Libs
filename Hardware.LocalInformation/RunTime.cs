@@ -34,15 +34,15 @@ namespace Hardware.LocalInformation
                 Used = total - free
             };
 #else
-var output = ShellUtil.Bash("free -m");
-                var lines = output.Split("\n");
-                var memory = lines[1].Split(" ", StringSplitOptions.RemoveEmptyEntries);
-                return new
-                {
-                    Total = long.Parse(memory[1]),
-                    Used = long.Parse(memory[2]),
-                    Free = long.Parse(memory[3])
-                };
+            var output = ShellUtil.Execute("free -m");
+            var lines = output.Split("\n");
+            var memory = lines[1].Split(" ", StringSplitOptions.RemoveEmptyEntries);
+            return new RamInfo()
+            {
+                Total = long.Parse(memory[1]),
+                Used = long.Parse(memory[2]),
+                Free = long.Parse(memory[3])
+            };
 #endif
         }
     }
