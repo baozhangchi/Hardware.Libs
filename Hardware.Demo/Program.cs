@@ -1,11 +1,26 @@
-﻿using System;
+﻿#region File Header
+
+// Solution: Hardware.Libs
+// Project: Hardware.Demo
+// FileName: Program.cs
+// Create Time: 2022-11-21 9:37
+// Update Time: 2022-11-21 11:42
+// Updator: Zhangchi Bao
+
+#endregion
+
+#region Import Namespaces
+
+using System;
 using Hardware.LocalInformation;
+
+#endregion
 
 namespace Hardware.Demo
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             var partitionInfos
                 = new Partition().GetPartitionInfos();
@@ -18,7 +33,6 @@ namespace Hardware.Demo
 
             Console.WriteLine(new RunTime().GetRamInfo());
             Console.ReadKey();
-
         }
     }
 }

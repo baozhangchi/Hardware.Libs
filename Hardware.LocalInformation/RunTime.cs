@@ -4,7 +4,8 @@
 // Project: Hardware.LocalInformation
 // FileName: RunTime.cs
 // Create Time: 2022-11-21 9:37
-// Update Time: 2022-11-21 10:29
+// Update Time: 2022-11-21 11:42
+// Updator: Zhangchi Bao
 
 #endregion
 

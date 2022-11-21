@@ -1,4 +1,19 @@
+#region File Header
+
+// Solution: Hardware.Libs
+// Project: Hardware.LocalInformation
+// FileName: Platform.cs
+// Create Time: 2022-11-21 9:37
+// Update Time: 2022-11-21 11:42
+// Updator: Zhangchi Bao
+
+#endregion
+
+#region Import Namespaces
+
 using CZGL.SystemInfo;
+
+#endregion
 
 namespace Hardware.LocalInformation
 {
@@ -6,11 +21,12 @@ namespace Hardware.LocalInformation
     {
         public PlatformInfo GetPlatformInfo()
         {
-            return new PlatformInfo()
+            return new PlatformInfo
             {
                 OSArchitecture = SystemPlatformInfo.OSArchitecture,
                 OSPlatformID = SystemPlatformInfo.OSPlatformID,
-                OSVersion = SystemPlatformInfo.OSVersion
+                OSVersion = SystemPlatformInfo.OSVersion,
+                OSDescription = SystemPlatformInfo.OSDescription
             };
         }
     }
@@ -21,9 +37,11 @@ namespace Hardware.LocalInformation
         public string OSPlatformID { get; set; }
         public string OSVersion { get; set; }
 
+        public string OSDescription { get; set; }
+
         public override string ToString()
         {
-            return $"Architecture£º {OSArchitecture}\tPlatform: {OSPlatformID}\tVersion: {OSVersion}";
+            return $"Architecture£º {OSArchitecture}\tPlatform: {OSPlatformID}\tVersion: {OSVersion}\tDescription: {OSDescription}";
         }
     }
 }

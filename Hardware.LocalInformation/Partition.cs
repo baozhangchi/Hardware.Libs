@@ -1,25 +1,28 @@
-﻿#region FileHeader
+﻿#region File Header
 
+// Solution: Hardware.Libs
+// Project: Hardware.LocalInformation
 // FileName: Partition.cs
-// ProjectName: Hardware.LocalInformation
-// CreateTime: 2022-11-18 16:11
-// UpdateTime: 2022-11-18 16:11
-// Updator: zhangchi
+// Create Time: 2022-11-21 9:37
+// Update Time: 2022-11-21 11:42
+// Updator: Zhangchi Bao
 
 #endregion
 
-using System;
+#region Import Namespaces
+
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using CZGL.SystemInfo;
+
+#endregion
 
 namespace Hardware.LocalInformation
 {
     public class Partition
     {
-        private static readonly string[] HardDiskFileSystems = new[] { "ext3", "ext4", "NTFS", "exFAT", "fat32" };
+        private static readonly string[] HardDiskFileSystems = { "ext3", "ext4", "NTFS", "exFAT", "fat32" };
 
         public List<PartitionInfo> GetPartitionInfos()
         {
@@ -27,7 +30,7 @@ namespace Hardware.LocalInformation
                 .Where(x => x.DriveType == DriveType.Fixed && HardDiskFileSystems.Contains(x.FileSystem)).ToList();
             return disks.Select(x => new PartitionInfo
             {
-                Label = x.DriveInfo.VolumeLabel,
+                Label = string.IsNullOrWhiteSpace(x.DriveInfo.VolumeLabel) ? x.Name : x.DriveInfo.VolumeLabel,
                 Name = x.Name,
                 Format = x.FileSystem,
                 Type = x.DriveType,
@@ -40,7 +43,6 @@ namespace Hardware.LocalInformation
     public class PartitionInfo
     {
         /// <summary>
-        /// 
         /// </summary>
         public string Label { get; set; }
 

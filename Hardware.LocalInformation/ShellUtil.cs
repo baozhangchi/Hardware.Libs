@@ -4,7 +4,8 @@
 // Project: Hardware.LocalInformation
 // FileName: ShellUtil.cs
 // Create Time: 2022-11-21 10:18
-// Update Time: 2022-11-21 10:21
+// Update Time: 2022-11-21 11:42
+// Updator: Zhangchi Bao
 
 #endregion
 
@@ -21,7 +22,7 @@ namespace Hardware.LocalInformation
         public static string Execute(string fileName, string args)
         {
 #if Windows
-            var output = string.Empty;
+            string output;
             var info = new ProcessStartInfo
             {
                 FileName = fileName,
