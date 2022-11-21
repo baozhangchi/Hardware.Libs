@@ -1,6 +1,18 @@
+#region File Header
+
+// Solution: Hardware.Libs
+// Project: Hardware.LocalInformation
+// FileName: RunTime.cs
+// Create Time: 2022-11-21 9:37
+// Update Time: 2022-11-21 10:29
+
+#endregion
+
+#region Import Namespaces
+
 using System;
-using CZGL.SystemInfo;
-using CZGL.SystemInfo.Linux;
+
+#endregion
 
 namespace Hardware.LocalInformation
 {
@@ -9,58 +21,29 @@ namespace Hardware.LocalInformation
         public RamInfo GetRamInfo()
         {
 #if Windows
-            var total = SystemPlatformInfo.
-            return new RamInfo()
+            var output = ShellUtil.Execute("wmic", "OS get FreePhysicalMemory,TotalVisibleMemorySize /Value");
+            var lines = output.Trim().Split("\n");
+            var freeMemoryParts = lines[0].Split("=", StringSplitOptions.RemoveEmptyEntries);
+            var totalMemoryParts = lines[1].Split("=", StringSplitOptions.RemoveEmptyEntries);
+            var total = long.Parse(totalMemoryParts[1]);
+            var free = long.Parse(freeMemoryParts[1]);
+            return new RamInfo
             {
-                Total = item.Total,
-                Free = item.Free,
-                Used = item.Used,
-                CanUsed = item.CanUsed,
-                Buffers = item.Buffers
+                Total = total,
+                Free = free,
+                Used = total - free
             };
 #else
-            Console.WriteLine($"Get Ram on linux");
-            DynamicInfo info = new DynamicInfo();
-            Console.WriteLine(info == null);
-            var item = info.GetMem();
-            Console.WriteLine(item == null);
-            return new RamInfo()
-            {
-                Total = item.Total,
-                Free = item.Free,
-                Used = item.Used,
-                CanUsed = item.CanUsed,
-                Buffers = item.Buffers
-            };
+var output = ShellUtil.Bash("free -m");
+                var lines = output.Split("\n");
+                var memory = lines[1].Split(" ", StringSplitOptions.RemoveEmptyEntries);
+                return new
+                {
+                    Total = long.Parse(memory[1]),
+                    Used = long.Parse(memory[2]),
+                    Free = long.Parse(memory[3])
+                };
 #endif
-        }
-
-        public ProcessInfo GetProcessInfo()
-        {
-            DynamicInfo info = new DynamicInfo();
-            var item = info.GetTasks();
-            return new ProcessInfo()
-            {
-                Total = item.Total,
-                Running = item.Running,
-                Sleeping = item.Sleeping,
-                Stopped = item.Stopped,
-                Zombie = item.Zombie
-            };
-        }
-    }
-
-    public class ProcessInfo
-    {
-        public int Total { get; set; }
-        public int Running { get; set; }
-        public int Sleeping { get; set; }
-        public int Stopped { get; set; }
-        public int Zombie { get; set; }
-
-        public override string ToString()
-        {
-            return $"Total: {Total}\tRunning: {Running}\tSleeping: {Sleeping}\tStopped: {Stopped}";
         }
     }
 
@@ -69,12 +52,10 @@ namespace Hardware.LocalInformation
         public long Total { get; internal set; }
         public long Free { get; internal set; }
         public long Used { get; internal set; }
-        public long CanUsed { get; internal set; }
-        public long Buffers { get; internal set; }
 
         public override string ToString()
         {
-            return $"Total: {Total}\tUsed: {Used}\tFree: {Free}\tPercent: {((double)Free / Total):P}";
+            return $"Total: {Total}\tUsed: {Used}\tFree: {Free}\tPercent: {(double)Free / Total:P}";
         }
     }
 }

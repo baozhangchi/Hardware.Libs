@@ -14,9 +14,11 @@ namespace Hardware.Demo
                 Console.WriteLine(partitionInfo);
             }
 
-            var runtime = new RunTime();
-            Console.WriteLine(runtime.GetRamInfo());
-            Console.WriteLine(runtime.GetProcessInfo());
+            Console.WriteLine(new Platform().GetPlatformInfo());
+
+            Console.WriteLine(new RunTime().GetRamInfo());
+            Console.ReadKey();
+
         }
     }
 }

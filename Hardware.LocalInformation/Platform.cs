@@ -20,5 +20,10 @@ namespace Hardware.LocalInformation
         public string OSArchitecture { get; set; }
         public string OSPlatformID { get; set; }
         public string OSVersion { get; set; }
+
+        public override string ToString()
+        {
+            return $"Architecture£º {OSArchitecture}\tPlatform: {OSPlatformID}\tVersion: {OSVersion}";
+        }
     }
 }
